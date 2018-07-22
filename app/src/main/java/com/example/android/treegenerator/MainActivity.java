@@ -18,20 +18,21 @@ public class MainActivity extends AppCompatActivity {
     private Paint mPaint;
     private Bitmap mBitmap;
     private ImageView mImageView;
+    public static SeekBar mSeekBar;
+
 
     private double angle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SeekBar mSeekBar;
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         mImageView = (ImageView) findViewById(R.id.imageView);
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
 
         // set up for the seekbar
-        // TODO why can'r the program find the mSeekBar object
         // TODO how to refresh the tree image according to the angle from the seekbar
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_main);
         //setContentView(new myClass(this));
     }
 
