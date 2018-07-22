@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(new myClass(this));
     }
 
+
+
     public class myClass extends View{
         myClass(Context context){
             super(context);
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             //canvas.drawLine(x, y, x/2, y/2, paint);
             Tree obj = new Tree(canvas);
             obj.drawTree(x/2, y-y/6, 160, paint);
-
         }
     }
 
