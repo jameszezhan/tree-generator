@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         mImageView = (ImageView) findViewById(R.id.imageView);
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
+
+        // below is only for testing duirng dev
         mButton = (Button) findViewById(R.id.button);
 
         mButton.setOnClickListener(new View.OnClickListener(){
@@ -55,13 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
                 //draw objects
                 paint.setColor(Color.RED);
-                Tree obj = new Tree(mCanvas);
+                Tree obj = new Tree(mCanvas, (float)15);
                 obj.drawTree(x/2, y-y/6, 160, paint);
 
                 // attach the bitmap to the imageview
                 mImageView.setImageBitmap(imageBitmap);
             }
         });
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -73,7 +76,27 @@ public class MainActivity extends AppCompatActivity {
             // Get the value from the seekBar from user input and store it in a double angle.
             @Override
             public void onProgressChanged(SeekBar seekBar, int seekBarValue, boolean fromUser) {
-                angle = seekBarValue;
+                angle = (float) seekBarValue;
+                int x = mImageView.getWidth();
+                int y = mImageView.getHeight();
+
+                //Create bitmap and use that bitmap object as an argument for creating a canvas.
+                Bitmap imageBitmap = Bitmap.createBitmap(x,y,Bitmap.Config.ARGB_8888);
+                mCanvas = new Canvas(imageBitmap);
+
+                // initiate Paint object, and set the background color, painting style
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.BLACK);
+                mCanvas.drawPaint(paint);
+
+                //draw objects
+                paint.setColor(Color.RED);
+                Tree obj = new Tree(mCanvas, (float)angle);
+                obj.drawTree(x/2, y-y/6, 160, paint);
+
+                // attach the bitmap to the imageview
+                mImageView.setImageBitmap(imageBitmap);
             }
 
             // this function is not necessary.

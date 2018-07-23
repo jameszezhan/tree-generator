@@ -13,9 +13,11 @@ public class Tree{
     public static int mStickLength = 100;
     public static List<Branch> branchList = new ArrayList<Branch>();
     public static int lengthStep = 12;
+    public static float mAngleStep;
 
-    Tree(Canvas canvas){
+    Tree(Canvas canvas, float angle){
         this.mCanvas = canvas;
+        this.mAngleStep = angle;
     }
 
 
@@ -51,13 +53,13 @@ public class Tree{
      *
      */
     public static ArrayList<Branch> childBranch(Branch root, Paint paint) {
-        float[] angleList = {5,10, 15, 20,25,30};
-        int index = new Random().nextInt(angleList.length);
+        //float[] angleList = {5,10, 15, 20,25,30};
+        //int index = new Random().nextInt(angleList.length);
         ArrayList<Branch> childrenBranches = new ArrayList<Branch>();
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle+15, root.branchLength-12, paint));
+                root.angle+mAngleStep, root.branchLength-12, paint));
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle-15, root.branchLength-12, paint));
+                root.angle-mAngleStep, root.branchLength-12, paint));
         return childrenBranches;
     }
 
