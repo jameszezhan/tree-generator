@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap mBitmap;
     private ImageView mImageView;
     public static SeekBar mSeekBar;
+    public Button mButton;
 
 
     private double angle = 0;
@@ -29,8 +31,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mImageView = (ImageView) findViewById(R.id.imageView);
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
+        mButton = (Button) findViewById(R.id.button);
+
+        mButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // get the width and height of the imageView
+                int x = mImageView.getWidth();
+                int y = mImageView.getHeight();
+
+                //Create bitmap and use that bitmap object as an argument for creating a canvas.
+                Bitmap imageBitmap = Bitmap.createBitmap(x,y,Bitmap.Config.ARGB_8888);
+                mCanvas = new Canvas(imageBitmap);
+
+                // initiate Paint object, and set the background color, painting style
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.BLACK);
+                mCanvas.drawPaint(paint);
+
+                //draw objects
+                paint.setColor(Color.RED);
+                Tree obj = new Tree(mCanvas);
+                obj.drawTree(x/2, y-y/6, 160, paint);
+
+                // attach the bitmap to the imageview
+                mImageView.setImageBitmap(imageBitmap);
+            }
+        });
+
+
+
 
         // set up for the seekbar
         // TODO how to refresh the tree image according to the angle from the seekbar
@@ -46,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 Toast.makeText(getApplicationContext(), "start seek bar", Toast.LENGTH_SHORT).show();
-
             }
 
             // this function is not necessary
@@ -56,49 +89,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //setContentView(new myClass(this));
     }
-
-
-
-    public class myClass extends View{
-        myClass(Context context){
-            super(context);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-
-            // get the width and height of
-            int x = getWidth();
-            System.out.print("int x = " + x);
-            int y = getHeight();
-            System.out.print("int y = " + y);
-
-            // initiate Paint object, and set the background color, painting style
-            Paint paint = new Paint();
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(Color.BLACK);
-            canvas.drawPaint(paint);
-
-            //draw objects
-            paint.setColor(Color.RED);
-            //canvas.drawLine(x, y, x/2, y/2, paint);
-            Tree obj = new Tree(canvas);
-            obj.drawTree(x/2, y-y/6, 160, paint);
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
 }
