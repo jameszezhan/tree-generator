@@ -77,7 +77,7 @@ public class Tree{
 
      */
 
-    void drawTree(float begin_X, float begin_Y, float stickLength, Paint paint){
+    void generateTree(float begin_X, float begin_Y, float stickLength, Paint paint){
         // Generate the ArrayList<Branch>
         branchList.add(new Branch(begin_X, begin_Y, 90, stickLength, paint));
         while(mStickLength>=0) {
@@ -90,7 +90,12 @@ public class Tree{
             }
             mStickLength = mStickLength-lengthStep;
         }
+    }
 
+
+
+
+    void drawTree(Paint paint){
         // parse through the ArrayList<Branch> and draw branches
         for (int i = branchList.size()-1;i>=0;i--) {
             //TODO refactor the addFlower function

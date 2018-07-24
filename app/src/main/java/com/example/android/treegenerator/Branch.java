@@ -46,4 +46,13 @@ public class Branch {
         this.mPaint = paint;
     }
 
+    public void updateBranchWithNewAngle(float newBegin_x, float newBegin_y, float newAngle){
+        this.begin_X = begin_X;
+        this.begin_Y = begin_Y;
+        this.angle = angle;
+        this.branchLength = branchLength;
+        this.end_X = (float)(Math.cos(Math.toRadians(angle))*branchLength)+begin_X;
+        this.end_Y = begin_Y-(float)(Math.sin(Math.toRadians(angle))*branchLength);
+    }
+
 }
