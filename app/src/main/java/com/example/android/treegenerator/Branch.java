@@ -15,7 +15,7 @@ public class Branch {
     public float angle;
 
     public Paint mPaint;
-    public boolean finished=false;
+    public boolean hasChildren=false;
 
 
 

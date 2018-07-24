@@ -82,8 +82,11 @@ public class Tree{
         branchList.add(new Branch(begin_X, begin_Y, 90, stickLength, paint));
         while(mStickLength>=0) {
             for (int i = branchList.size()-1;i>=0;i--) {
-                branchList.add(childBranch(branchList.get(i), paint).get(0));
-                branchList.add(childBranch(branchList.get(i), paint).get(1));
+                if (branchList.get(i).hasChildren==false) {
+                    branchList.add(childBranch(branchList.get(i), paint).get(0));
+                    branchList.add(childBranch(branchList.get(i), paint).get(1));
+                    branchList.get(i).hasChildren = true;
+                }
             }
             mStickLength = mStickLength-lengthStep;
         }
