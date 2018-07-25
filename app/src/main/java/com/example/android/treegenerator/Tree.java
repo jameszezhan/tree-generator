@@ -54,14 +54,14 @@ public class Tree{
      *
      */
     public static ArrayList<Branch> childBranch(Branch root, Paint paint) {
-        float[] angleList = {5,10, 15, 20,21,22,23};
+        //float[] angleList = {5,10, 15, 20,21,22,23};
         ArrayList<Branch> childrenBranches = new ArrayList<Branch>();
-        int indexplus = new Random().nextInt(angleList.length);
+       // int indexplus = new Random().nextInt(angleList.length);
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle+angleList[indexplus], root.branchLength-12, paint));
-        int indexminus = new Random().nextInt(angleList.length);
+                root.angle+mAngleStep, root.branchLength-12, paint, root));
+        //int indexminus = new Random().nextInt(angleList.length);
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle-angleList[indexminus], root.branchLength-12, paint));
+                root.angle-mAngleStep, root.branchLength-12, paint, root));
         return childrenBranches;
     }
 
@@ -81,7 +81,7 @@ public class Tree{
 
     void generateTree(float begin_X, float begin_Y, float stickLength, Paint paint){
         // Generate the ArrayList<Branch>
-        branchList.add(new Branch(begin_X, begin_Y, 90, stickLength, paint));
+        branchList.add(new Branch(begin_X, begin_Y, 90, stickLength, paint, null));
         while(mStickLength>=0) {
             for (int i = branchList.size()-1;i>=0;i--) {
                 if (branchList.get(i).hasChildren==false) {

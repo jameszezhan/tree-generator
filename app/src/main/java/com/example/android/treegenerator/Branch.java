@@ -13,6 +13,7 @@ public class Branch {
     public float end_Y;
     public float branchLength;
     public float angle;
+    public Branch parent;
 
     public Paint mPaint;
     public boolean hasChildren=false;
@@ -36,7 +37,7 @@ public class Branch {
     // will the calculated automatically, and assigned to the variables.
     // var finished will be signed true upon initiating the Branch object, to avoid repeat painting of the same object.
 
-    public Branch(float begin_X, float begin_Y, float angle, float branchLength, Paint paint) {
+    public Branch(float begin_X, float begin_Y, float angle, float branchLength, Paint paint, Branch parent) {
         this.begin_X = begin_X;
         this.begin_Y = begin_Y;
         this.angle = angle;
@@ -44,12 +45,13 @@ public class Branch {
         this.end_X = (float)(Math.cos(Math.toRadians(angle))*branchLength)+begin_X;
         this.end_Y = begin_Y-(float)(Math.sin(Math.toRadians(angle))*branchLength);
         this.mPaint = paint;
+        this.parent = parent;
     }
 
     public void updateBranchWithNewAngle(float newBegin_x, float newBegin_y, float newAngle){
-        this.begin_X = begin_X;
-        this.begin_Y = begin_Y;
-        this.angle = angle;
+        this.begin_X = newBegin_x;
+        this.begin_Y = newBegin_y;
+        this.angle = newAngle;
         this.branchLength = branchLength;
         this.end_X = (float)(Math.cos(Math.toRadians(angle))*branchLength)+begin_X;
         this.end_Y = begin_Y-(float)(Math.sin(Math.toRadians(angle))*branchLength);
