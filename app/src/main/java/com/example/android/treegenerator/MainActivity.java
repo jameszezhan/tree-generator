@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     public Button mButton;
     public static Tree mTreeObj;
 
-    public static int x = 1440;
-    public static int y = 2960;
+    public static int x = 1500;
+    public static int y = 2000;
 
     private double angle = 0;
 

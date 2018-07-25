@@ -1,6 +1,7 @@
 package com.example.android.treegenerator;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Random;
 public class Tree{
 
     public static Canvas mCanvas;
-    public static int mStickLength = 100;
+    public static int mStickLength = 150;
     public static List<Branch> branchList = new ArrayList<Branch>();
     public static int lengthStep = 12;
     public static float mAngleStep;
@@ -53,13 +54,14 @@ public class Tree{
      *
      */
     public static ArrayList<Branch> childBranch(Branch root, Paint paint) {
-        //float[] angleList = {5,10, 15, 20,25,30};
-        //int index = new Random().nextInt(angleList.length);
+        float[] angleList = {5,10, 15, 20,25,30};
         ArrayList<Branch> childrenBranches = new ArrayList<Branch>();
+        int indexplus = new Random().nextInt(angleList.length);
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle+mAngleStep, root.branchLength-12, paint));
+                root.angle+angleList[indexplus], root.branchLength-12, paint));
+        int indexminus = new Random().nextInt(angleList.length);
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
-                root.angle-mAngleStep, root.branchLength-12, paint));
+                root.angle-angleList[indexminus], root.branchLength-12, paint));
         return childrenBranches;
     }
 
@@ -98,11 +100,10 @@ public class Tree{
     void drawTree(Paint paint){
         // parse through the ArrayList<Branch> and draw branches
         for (int i = branchList.size()-1;i>=0;i--) {
-            //TODO refactor the addFlower function
-//            if (branchList.get(i).branchLength <= 12) {
-//                addFlower(g,branchList.get(i));
-//            }
             branchList.get(i).drawBranch(mCanvas, paint);
+            if (branchList.get(i).branchLength <= 12) {
+                addFlower(mCanvas,branchList.get(i), paint);
+            }
         }
 
     }
@@ -110,10 +111,11 @@ public class Tree{
      * addFlower function adds a small circle at the end of the branch
 //     */
         //TODO refactor the addFlower function
-//    public void addFlower(Graphics g, Branch endBranch) {
-//        g.setColor(new Color(196, 160, 229));
-//        g.fillOval(endBranch.end_X-5, endBranch.end_Y-5, 10, 10);
-//    }
+    public void addFlower(Canvas canvas, Branch endBranch, Paint paint) {
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(endBranch.end_X, endBranch.end_Y, 3 , paint);
+    }
 	/*
 	public void setGradientColor(Graphics g, Branch branch) {
 
