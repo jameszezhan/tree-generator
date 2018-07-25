@@ -54,7 +54,7 @@ public class Tree{
      *
      */
     public static ArrayList<Branch> childBranch(Branch root, Paint paint) {
-        float[] angleList = {5,10, 15, 20,25,30};
+        float[] angleList = {5,10, 15, 20,21,22,23};
         ArrayList<Branch> childrenBranches = new ArrayList<Branch>();
         int indexplus = new Random().nextInt(angleList.length);
         childrenBranches.add(new Branch(root.end_X, root.end_Y,
@@ -101,7 +101,7 @@ public class Tree{
         // parse through the ArrayList<Branch> and draw branches
         for (int i = branchList.size()-1;i>=0;i--) {
             branchList.get(i).drawBranch(mCanvas, paint);
-            if (branchList.get(i).branchLength <= 12) {
+            if (branchList.get(i).branchLength <= 130 && i%2==0) {
                 addFlower(mCanvas,branchList.get(i), paint);
             }
         }
