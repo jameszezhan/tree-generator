@@ -10,14 +10,12 @@ import java.util.Random;
 
 public class Tree{
 
-    public static Canvas mCanvas;
     public static int mStickLength = 150;
     public static List<Branch> branchList = new ArrayList<Branch>();
     public static int lengthStep = 12;
     public static float mAngleStep;
 
-    Tree(Canvas canvas, float angle){
-        this.mCanvas = canvas;
+    Tree(float angle){
         this.mAngleStep = angle;
     }
 
@@ -97,12 +95,12 @@ public class Tree{
 
 
 
-    void drawTree(Paint paint){
+    void drawTree(Paint paint, Canvas canvas){
         // parse through the ArrayList<Branch> and draw branches
         for (int i = branchList.size()-1;i>=0;i--) {
-            branchList.get(i).drawBranch(mCanvas, paint);
+            branchList.get(i).drawBranch(canvas, paint);
             if (branchList.get(i).branchLength <= 130 && i%2==0) {
-                addFlower(mCanvas,branchList.get(i), paint);
+                addFlower(canvas,branchList.get(i), paint);
             }
         }
 
@@ -110,7 +108,6 @@ public class Tree{
     /*
      * addFlower function adds a small circle at the end of the branch
 //     */
-        //TODO refactor the addFlower function
     public void addFlower(Canvas canvas, Branch endBranch, Paint paint) {
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);

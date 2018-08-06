@@ -7,24 +7,31 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
-    private Canvas mCanvas;
-    private Paint mPaint;
-    private Bitmap mBitmap;
-    private ImageView mImageView;
+
+    private TreeCustomView mTreeCustomView;
+    public static Paint mPaint;
     public static SeekBar mSeekBar;
     public TextView mTextView;
     public static Tree mTreeObj;
+    public static Button button1, button2, button3, button4;
+    public static ArrayList<Branch> treeArray;
+    public Toast mToast;
 
-    public static int x = 1500;
-    public static int y = 2000;
+    //public static int x = ;
+    //public static int y = ;
 
-    private double angle = 0;
+    private double angle = 15;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -35,90 +42,107 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mImageView = (ImageView) findViewById(R.id.imageView);
-        mSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        mTextView = (TextView) findViewById(R.id.textView);
-
+        initVars();
         initGUI();
-        new treeGeneration().execute();
+        initTree((float)angle);
 
-        // attach the bitmap to the imageview
-        mImageView.setImageBitmap(mBitmap);
+        //TODO: find out how to update the treeCustomView after clicking the buttons.
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                angle = 10;
+                mTreeCustomView.invalidate();;
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                angle = 15;
+                mTreeCustomView.invalidate();;
 
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                angle = 20;
+                initTree((float)angle);
+                mTreeCustomView.invalidate();;
 
+            }
+        });
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                angle = 25;
+                mTreeCustomView.invalidate();;
 
-
+            }
+        });
+        /*
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         // set up for the seekbar
-        // TODO Why doesn't the tree refresh?
-
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             // Get the value from the seekBar from user input and store it in a double angle.
             @Override
             public void onProgressChanged(SeekBar seekBar, int seekBarValue, boolean fromUser) {
                 angle = (double) seekBarValue;
-                // initTree(angle);
-                mTreeObj = new Tree(mCanvas, (float)15);
-                mTreeObj.generateTree(x/2, y-y/6, 160, mPaint);
-                mTreeObj.drawTree(mPaint);
             }
 
             // this function is not necessary.
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(getApplicationContext(), "start seek bar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "start seek bar", Toast.LENGTH_SHORT).show();
             }
 
             // this function is not necessary
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(getApplicationContext(), "end seek bar", Toast.LENGTH_SHORT).show();
-
+                mPaint.setColor(Color.BLUE);
+                mImageView.invalidate();
 
             }
-        });
+        });*/
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private class treeGeneration extends AsyncTask<Void, Void, Tree>{
 
         @Override
         protected Tree doInBackground(Void... voids) {
-            initTree();
+            initTree((float)angle);
             return mTreeObj;
         }
 
         @Override
         protected void onPostExecute(Tree tree) {
             super.onPostExecute(tree);
-            tree.drawTree(mPaint);
-
+            //tree.drawTree(mPaint);
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void initTree(){
+    public void initTree(float treeAngle){
         //draw objects
         mPaint.setColor(Color.RED);
-        mTreeObj = new Tree(mCanvas, (float)15);
-        mTreeObj.generateTree(x/2, y-y/6, 160, mPaint);
+        mTreeObj = new Tree((float)treeAngle);
+        mTreeObj.generateTree(1500/2, 2000-2000/6, 160, mPaint);
     }
 
     public void initGUI(){
 
-        //Create bitmap and use that bitmap object as an argument for creating a canvas.
-
-        mBitmap = Bitmap.createBitmap(x,y,Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-
-        // initiate Paint object, and set the background color, painting style
+//        // initiate Paint object, and set the background color, painting style
         mPaint = new Paint();
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.BLACK);
-        mCanvas.drawPaint(mPaint);
+        mPaint.setColor(Color.RED);
     }
 
-    //TODO how do I update the begin x and y coordinates as well?
+    public void initVars(){
+        button1 = (Button)findViewById(R.id.button1);
+        button2 = (Button)findViewById(R.id.button2);
+        button3 = (Button)findViewById(R.id.button3);
+        button4 = (Button)findViewById(R.id.button4);
+        mTreeCustomView = (TreeCustomView)findViewById(R.id.treeView);
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void refreshTree(float selectedAngle, Tree treeObj){
         treeObj.branchList.get(0).updateBranchWithNewAngle(
                 treeObj.branchList.get(0).begin_X,
